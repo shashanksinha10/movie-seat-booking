@@ -15,13 +15,20 @@ container.addEventListener('click', e => {
 
 movieSelect.addEventListener('change', e => {
     ticketPrice = +e.target.value;
+    setMovieData(e.target.selectIndex, e.target.value);
     undateSelectedCount();
 })
 
 function undateSelectedCount() {
     const selectedSeat = document.querySelectorAll('.row .seat.selected');
+    const seatIndex = [...selectedSeat].map((seat) => [...seats].indexOf(seat));
+    localStorage.setItem('selectedSeats', JSON.stringify(seatIndex));
     const selectedSeatCount = selectedSeat.length;
     count.innerHTML = selectedSeatCount;
-    total.innerText = selectedSeatCount * ticketPrice
-    console.log(selectedSeatCount)
+    total.innerText = selectedSeatCount * ticketPrice;
+}
+
+function setMovieData(movieIndex, moviePrice){
+    localStorage.setItem('selectedMovieIndex', movieIndex);
+    localStorage.setItem('selectedMoviePrice', moviePrice);
 }
